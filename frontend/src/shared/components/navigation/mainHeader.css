@@ -1,0 +1,26 @@
+.main-header {
+    height: 3.5rem;
+    width: 100%;
+    background-color: #e0e1dd;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    padding: 0 1rem;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 5;
+    box-shadow: 0 1.5px 5px rgba(0, 0, 0, 0.15);
+    border-bottom: 1px solid #283618;
+}
+main {
+    margin-top: 5rem;
+}
+
+@media screen and (min-width: 768px) {
+    .main-header {
+        justify-content: space-around;
+    }
+}

@@ -1,0 +1,46 @@
+.main-nav_title {
+    color: #132a13;
+}
+.main-nav_title a {
+    font-family: "Water Brush", cursive;
+    color: #132a13;
+}
+
+.main-nav_btn {
+    width: 3rem;
+    height: 1.8rem;
+
+    background: transparent;
+    border: none;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.main-nav_btn span {
+    width: 2.5rem;
+    height: 4px;
+
+    background-color: black;
+
+    display: block;
+}
+.main-nav_header-nav {
+    display: none;
+}
+.main-nav_menu-nav {
+    height: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    .main-nav_btn {
+        display: none;
+    }
+    .main-nav_header-nav {
+        display: block;
+    }
+}

@@ -7,6 +7,8 @@ import NavLinks from "./NavLinks";
 import SideMenu from "./SideMenu";
 import Backdrop from "../UI-elements/Backdrop";
 
+import "./mainNav.css";
+
 const MainNav = (props) => {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -22,23 +24,20 @@ const MainNav = (props) => {
         <>
             {menuIsOpen && <Backdrop onClick={closeMenuHandler} />}
             <SideMenu show={menuIsOpen} onClick={closeMenuHandler}>
-                <nav className="main-nav__menu-nav">
+                <nav className="main-nav_menu-nav">
                     <NavLinks />
                 </nav>
             </SideMenu>
             <MainHeader>
-                <button
-                    className="main-nav__menu-btn"
-                    onClick={openMenuHandler}
-                >
+                <button className="main-nav_btn" onClick={openMenuHandler}>
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
-                <h1 className="main-navigation__title">
-                    <Link to="/">Your Plates</Link>
+                <h1 className="main-nav_title">
+                    <Link to="/">WeEat</Link>
                 </h1>
-                <nav className="main-navigation__header-nav">
+                <nav className="main-nav_header-nav">
                     <NavLinks />
                 </nav>
             </MainHeader>

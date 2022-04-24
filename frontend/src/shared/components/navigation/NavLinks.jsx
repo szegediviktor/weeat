@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 
+import "./navLinks.css";
+
 const NavLinks = (props) => {
     return (
         <ul className="nav-links">

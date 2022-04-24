@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Water+Brush&display=swap");
+
+/*
+font-family: 'Montserrat', sans-serif;
+font-family: 'Water Brush', cursive;
+*/
+
+* {
+    box-sizing: border-box;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+}
+body {
+    background-color: rgba(229, 229, 229, 0.555);
+}

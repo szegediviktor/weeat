@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
+import "./sideMenu.css";
+
 const SideMenu = (props) => {
     const content = (
         <CSSTransition
