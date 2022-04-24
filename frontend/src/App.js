@@ -1,8 +1,27 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Users from "./user/pages/Users";
+import UserPlates from "./plates/pages/UserPlates";
+import AddNewPlate from "./plates/pages/AddNewPlate";
+
+import MainNav from "./shared/components/navigation/MainNav";
+
 function App() {
     return (
         <div className="App">
-            <h1>WeEat</h1>
-            <h5>Share your plate, share your emotions</h5>
+            <BrowserRouter>
+                <MainNav />
+                <Routes>
+                    <Route path="/" element={<Users />} />
+                    <Route
+                        path="/:userId/plates"
+                        element={<UserPlates />}
+                        exact
+                    />
+                    <Route path="/plates/add" element={<AddNewPlate />} />
+                    <Route path="*" element={<Users />} />
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }
