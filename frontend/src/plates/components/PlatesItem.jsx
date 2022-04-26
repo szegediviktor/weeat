@@ -39,14 +39,19 @@ const PlatesItem = (props) => {
                     <div className="plate-item_info">
                         <h2>{props.title}</h2>
                         <h3>
-                            {props.chefName.length > 0 ? props.chefName : null}
-                            {" / "} {props.restaurantName}
+                            {props.chefName.length > 0
+                                ? `${props.chefName} / `
+                                : null}
+                            {props.restaurantName}
                         </h3>
                         <p>{props.description}</p>
+                        <br />
+                        <p>{`Rating: ${props.rate} / 10`}</p>
+                        <br />
                     </div>
                     <div className="plate-item_actions">
                         <Button inverse onClick={openMapHandler}>
-                            Where it is?
+                            Map
                         </Button>
                         <Button to={`/plates/${props.id}`}>EDIT</Button>
                         <Button danger>DELETE</Button>
