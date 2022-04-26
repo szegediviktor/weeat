@@ -6,7 +6,7 @@ import "./platesList.css";
 const PlatesList = (props) => {
     if (props.items.length < 1) {
         return (
-            <div className="plates-list center-div">
+            <div className="plates-list">
                 <Card>
                     <h2>No shared plates yet. Share one!</h2>
                     <button>Share plate</button>
@@ -16,7 +16,7 @@ const PlatesList = (props) => {
     }
 
     return (
-        <ul className="place-list">
+        <ul className="plate-list">
             {props.items.map((item) => {
                 return (
                     <PlatesItem

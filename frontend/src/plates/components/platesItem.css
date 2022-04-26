@@ -1,6 +1,7 @@
 .plate-item {
     margin: 1rem auto;
     list-style: none;
+    max-width: 50rem;
 }
 
 .plate-item_details {
