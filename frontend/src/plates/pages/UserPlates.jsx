@@ -27,7 +27,7 @@ const DUMMY_PLATES_DB = [
         description: "This plate was the winner in 2017, Bocuse D'or",
         rate: 9,
         imageURL:
-            "https://lh3.googleusercontent.com/p/AF1QipPlYVaMpO4jOWy8Y7g4gxgEawNn-gc2XRpnsg2K=s1600-w400",
+            "https://images.ctfassets.net/314o13npeir2/7uJeYpEuerm1C4nLLg3m3w/a4f8d91cf79c5b45af8ea59ceca6c295/stand-restaurant-budapest-16.jpg?w=1920&q=80",
         address: "Székely Mihály street 2., 1061, Budapest, Hungary",
         location: {
             lat: 47.5001411,
