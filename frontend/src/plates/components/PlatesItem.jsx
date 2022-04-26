@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../../shared/components/form-elements/Button";
 import Modal from "../../shared/components/UI-elements/Modal";
 import Card from "../../shared/components/UI-elements/Card";
+import Map from "../../shared/components/UI-elements/Map";
 
 import "./platesItem.css";
 
@@ -27,7 +28,13 @@ const PlatesItem = (props) => {
                 footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
             >
                 <div className="map-container">
-                    <h1>This going to be the map</h1>
+                    <Map
+                        center={{
+                            lng: props.coordinates.lng,
+                            lat: props.coordinates.lat,
+                        }}
+                        zoom={16}
+                    />
                 </div>
             </Modal>
 
