@@ -3,8 +3,8 @@ import PlatesItem from "./PlatesItem";
 
 import "./platesList.css";
 
-const PlatesList = ({ items }) => {
-    if (items.length < 1) {
+const PlatesList = (props) => {
+    if (props.items.length < 1) {
         return (
             <div className="plates-list center-div">
                 <Card>
@@ -17,8 +17,22 @@ const PlatesList = ({ items }) => {
 
     return (
         <ul className="place-list">
-            {items.map((item) => {
-                return <PlatesItem id={item.id} key={item.id} />;
+            {props.items.map((item) => {
+                return (
+                    <PlatesItem
+                        id={item.id}
+                        key={item.id}
+                        img={item.imageURL}
+                        title={item.title}
+                        restaurantName={item.restaurantName}
+                        chefName={item.chefName}
+                        description={item.description}
+                        rate={item.rate}
+                        address={item.address}
+                        creatorId={item.creator}
+                        coordinates={item.location}
+                    />
+                );
             })}
         </ul>
     );
