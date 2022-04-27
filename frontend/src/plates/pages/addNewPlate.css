@@ -1,0 +1,19 @@
+.form-add-new-plates {
+    width: 90%;
+    max-width: 40rem;
+
+    list-style: none;
+
+    margin: 2rem auto;
+    padding: 1rem;
+
+    background: white;
+
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    transition: all ease 300ms;
+}
+.form-add-new-plates:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
