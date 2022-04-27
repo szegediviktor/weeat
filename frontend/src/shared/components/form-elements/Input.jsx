@@ -5,8 +5,8 @@ import { validate } from "../../utils/validator";
 import "./input.css";
 
 const inputReducer = (state, action) => {
-    console.log(state);
-    console.log(action);
+    // console.log(state);
+    // console.log(action);
 
     switch (action.type) {
         case "CHANGE":
@@ -32,7 +32,7 @@ const Input = (props) => {
         isValid: false,
     });
 
-    console.log(inputState);
+    // console.log(inputState);
 
     const changeHandler = (e) => {
         dispatch({
