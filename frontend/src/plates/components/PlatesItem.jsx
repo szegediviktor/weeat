@@ -46,9 +46,8 @@ const PlatesItem = (props) => {
                     <div className="plate-item_info">
                         <h2>{props.title}</h2>
                         <h3>
-                            {props.chefName.length > 0
-                                ? `${props.chefName} / `
-                                : null}
+                            {props.chefName.length > 0 &&
+                                `${props.chefName} / `}
                             {props.restaurantName}
                         </h3>
                         <p>{props.description}</p>
