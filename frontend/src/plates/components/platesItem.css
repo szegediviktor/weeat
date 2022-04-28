@@ -57,9 +57,9 @@
 
 @media (min-width: 768px) {
     .plate-item {
-        margin: 3rem 5rem;
+        margin: 1rem 5rem;
     }
     .plate-item_img {
-        height: 20rem;
+        height: 18rem;
     }
 }

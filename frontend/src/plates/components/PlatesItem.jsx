@@ -51,9 +51,7 @@ const PlatesItem = (props) => {
                             {props.restaurantName}
                         </h3>
                         <p>{props.description}</p>
-                        <br />
                         <p>{`Rating: ${props.rate} / 10`}</p>
-                        <br />
                     </div>
                     <div className="plate-item_actions">
                         <Button inverse onClick={openMapHandler}>
