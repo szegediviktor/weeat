@@ -1,5 +1,3 @@
-import { useCallback, useReducer } from "react";
-
 import Input from "../../shared/components/form-elements/Input";
 import Button from "../../shared/components/form-elements/Button";
 import {
@@ -7,57 +5,22 @@ import {
     VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE,
 } from "../../shared/utils/validator";
+import { useForm } from "../../shared/hooks/useform";
 
 import "./addNewPlate.css";
 
-const formReducer = (state, action) => {
-    switch (action.type) {
-        case "INPUT_CHANGE":
-            let formIsValid = true;
-            for (const inputId in state.input) {
-                if (inputId === action.inputId) {
-                    formIsValid = formIsValid && action.isValid;
-                } else {
-                    formIsValid = formIsValid && state.input[inputId].isValid;
-                }
-                // console.log(state.input[inputId].isValid);
-            }
-            return {
-                ...state,
-                input: {
-                    ...state.input,
-                    [action.inputId]: {
-                        value: action.value,
-                        isValid: action.isValid,
-                    },
-                },
-                isValid: formIsValid,
-            };
-
-        default:
-            return state;
-    }
-};
-
 const AddNewPlate = () => {
-    const [formState, dispatch] = useReducer(formReducer, {
-        input: {
+    const [formState, inputHandler] = useForm(
+        {
             title: { value: "", isValid: false },
             description: { value: "", isValid: false },
+            chef: { value: "", isValid: false },
+            restaurant: { value: "", isValid: false },
+            address: { value: "", isValid: false },
+            rate: { value: "", isValid: false },
         },
-        isValid: false,
-    });
-
-    // console.log(formState);
-
-    const inputHandler = useCallback((id, value, isValid) => {
-        dispatch({
-            type: "INPUT_CHANGE",
-            value: value,
-            isValid: isValid,
-            inputId: id,
-        });
-    }, []);
+        false
+    );
 
     const plateSubmitHandler = (e) => {
         e.preventDefault();
@@ -74,6 +37,7 @@ const AddNewPlate = () => {
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter valid name!"
                 onInput={inputHandler}
+                notChangeable={false}
             />
             <Input
                 id="description"
@@ -82,23 +46,26 @@ const AddNewPlate = () => {
                 validators={[VALIDATOR_MINLENGTH(5)]}
                 errorText="Please enter valid description (at least 5 characters)!"
                 onInput={inputHandler}
+                notChangeable={false}
             />
             {/* Address input validation will be more precise on backend, this is just for the main fe logic */}
             <Input
                 id="chef"
                 element="input"
                 label="The Chef:"
-                // validators={}
+                validators={[VALIDATOR_REQUIRE]}
                 errorText="Please enter the name of the Chef!"
                 onInput={inputHandler}
+                notChangeable={true}
             />
             <Input
-                id="restaurant-name"
+                id="restaurant"
                 element="input"
                 label="The Restaurant:"
                 validators={[VALIDATOR_REQUIRE]}
                 errorText="Please enter a valid restaurant name!"
                 onInput={inputHandler}
+                notChangeable={true}
             />
             <Input
                 id="address"
@@ -107,6 +74,7 @@ const AddNewPlate = () => {
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter an address!"
                 onInput={inputHandler}
+                notChangeable={true}
             />
             <Input
                 id="rate"
@@ -115,6 +83,7 @@ const AddNewPlate = () => {
                 validators={[VALIDATOR_MAXLENGTH(2)]}
                 errorText="Please rate this plate 0-10!"
                 onInput={inputHandler}
+                notChangeable={true}
             />
             <Button type="submit" disabled={!formState.isValid}>
                 Add this Plate!

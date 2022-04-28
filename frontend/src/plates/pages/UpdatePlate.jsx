@@ -8,6 +8,7 @@ import {
     VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE,
 } from "../../shared/utils/validator";
+import { useForm } from "../../shared/hooks/useform";
 
 import "./addNewPlate.css";
 
@@ -17,6 +18,25 @@ const UpdatePlate = () => {
     const identifiedPlate = DUMMY_PLATES_DB.find(
         (plate) => plate.id === plateId
     );
+
+    const [formState, inputHandler] = useForm(
+        {
+            title: {
+                value: identifiedPlate.title,
+                isValid: true,
+            },
+            description: {
+                value: identifiedPlate.description,
+                isValid: true,
+            },
+        },
+        true
+    );
+
+    const updatePlateSubmitFormHandler = (e) => {
+        e.preventDefault();
+        console.log(formState.input);
+    };
 
     // console.log(identifiedPlate.description);
 
@@ -29,7 +49,10 @@ const UpdatePlate = () => {
     }
 
     return (
-        <form className="form-add-new-plates">
+        <form
+            className="form-add-new-plates"
+            onSubmit={updatePlateSubmitFormHandler}
+        >
             <Input
                 id="title"
                 element="input"
@@ -37,9 +60,9 @@ const UpdatePlate = () => {
                 label="Plate name:"
                 validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter valid name!"
-                onInput={() => {}}
-                initValue={identifiedPlate.title}
-                initValid={true}
+                onInput={inputHandler}
+                initValue={formState.input.title.value}
+                initValid={formState.input.title.isValid}
             />
             <Input
                 id="description"
@@ -47,11 +70,11 @@ const UpdatePlate = () => {
                 label="Description:"
                 validators={[VALIDATOR_MINLENGTH(5)]}
                 errorText="Please enter valid description (at least 5 characters)!"
-                onInput={() => {}}
-                initValue={identifiedPlate.description}
-                initValid={true}
+                onInput={inputHandler}
+                initValue={formState.input.description.value}
+                initValid={formState.input.description.isValid}
             />
-            <Button type="submit" disabled={true}>
+            <Button type="submit" disabled={!formState.isValid}>
                 Update Plate
             </Button>
         </form>
