@@ -5,6 +5,7 @@ import UserPlates from "./plates/pages/UserPlates";
 import AddNewPlate from "./plates/pages/AddNewPlate";
 
 import MainNav from "./shared/components/navigation/MainNav";
+import UpdatePlate from "./plates/pages/UpdatePlate";
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                         exact
                     />
                     <Route path="/plates/add" element={<AddNewPlate />} />
+                    <Route path="/plates/:plateId" element={<UpdatePlate />} />
                     <Route path="*" element={<Users />} />
                 </Routes>
             </BrowserRouter>
