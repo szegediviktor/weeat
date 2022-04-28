@@ -2,7 +2,7 @@ import Input from "../../shared/components/form-elements/Input";
 import Button from "../../shared/components/form-elements/Button";
 import {
     VALIDATOR_MAX,
-    VALIDATOR_MAXLENGTH,
+    VALIDATOR_MIN,
     VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE,
 } from "../../shared/utils/validator";
@@ -81,7 +81,7 @@ const AddNewPlate = () => {
                 id="rate"
                 element="input"
                 label="Rate (0 to 10):"
-                validators={[VALIDATOR_MAX(10)]}
+                validators={[VALIDATOR_MAX(10), VALIDATOR_MIN(0)]}
                 errorText="Please enter a number from 0 to 10!"
                 onInput={inputHandler}
                 notChangeable={true}
