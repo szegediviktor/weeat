@@ -39,3 +39,6 @@
     border-color: red;
     background: #ffd1d1;
 }
+#description {
+    resize: none;
+}
