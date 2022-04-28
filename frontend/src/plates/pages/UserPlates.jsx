@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import PlatesList from "../components/PlatesList";
 
-const DUMMY_PLATES_DB = [
+export const DUMMY_PLATES_DB = [
     {
         id: "p1",
         title: "Goulash Soup",
@@ -17,7 +17,7 @@ const DUMMY_PLATES_DB = [
             lat: 47.5001411,
             lng: 19.0594843,
         },
-        creator: "user2",
+        creator: "user1",
     },
     {
         id: "p2",
@@ -33,7 +33,7 @@ const DUMMY_PLATES_DB = [
             lat: 47.5001411,
             lng: 19.0594843,
         },
-        creator: "user2",
+        creator: "user1",
     },
 ];
 

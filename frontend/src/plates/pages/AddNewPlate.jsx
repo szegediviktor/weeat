@@ -70,9 +70,9 @@ const AddNewPlate = () => {
                 id="title"
                 element="input"
                 type="text"
-                label="Plate Name:"
+                label="Plate name:"
                 validators={[VALIDATOR_REQUIRE()]}
-                errorText="Please enter valid title!"
+                errorText="Please enter valid name!"
                 onInput={inputHandler}
             />
             <Input

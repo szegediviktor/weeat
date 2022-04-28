@@ -5,9 +5,6 @@ import { validate } from "../../utils/validator";
 import "./input.css";
 
 const inputReducer = (state, action) => {
-    // console.log(state);
-    // console.log(action);
-
     switch (action.type) {
         case "CHANGE":
             return {
@@ -27,12 +24,10 @@ const inputReducer = (state, action) => {
 
 const Input = (props) => {
     const [inputState, dispatch] = useReducer(inputReducer, {
-        value: "",
+        value: props.initValue || "",
         isTouched: false,
-        isValid: false,
+        isValid: props.initValid || false,
     });
-
-    // console.log(inputState);
 
     const { id, onInput } = props;
     const { value, isValid } = inputState;
@@ -61,6 +56,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 onChange={changeHandler}
                 onBlur={touchHandler}
+                value={inputState.value}
             />
         ) : (
             <textarea
@@ -69,6 +65,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 onChange={changeHandler}
                 onBlur={touchHandler}
+                value={inputState.value}
             />
         );
 

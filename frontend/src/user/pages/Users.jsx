@@ -9,7 +9,7 @@ const Users = () => {
         //     sharedPlates: 5,
         // },
         {
-            id: "user2",
+            id: "user1",
             name: "Széll Tamás",
             img: "https://image-api.nosalty.hu/nosalty/images/articles/7f/cs/Yc3l1ZE5jmujpz6FdXiDFNzI8EMfkbmiqdeARMvj.jpeg?w=640&h=640&fit=crop&s=ebd438bff0eb5b4c463ae94e2eec23ad",
             sharedPlates: 2,
