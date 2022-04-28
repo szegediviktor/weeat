@@ -1,6 +1,7 @@
 import Input from "../../shared/components/form-elements/Input";
 import Button from "../../shared/components/form-elements/Button";
 import {
+    VALIDATOR_MAX,
     VALIDATOR_MAXLENGTH,
     VALIDATOR_MINLENGTH,
     VALIDATOR_REQUIRE,
@@ -80,8 +81,8 @@ const AddNewPlate = () => {
                 id="rate"
                 element="input"
                 label="Rate (0 to 10):"
-                validators={[VALIDATOR_MAXLENGTH(2)]}
-                errorText="Please rate this plate 0-10!"
+                validators={[VALIDATOR_MAX(10)]}
+                errorText="Please enter a number from 0 to 10!"
                 onInput={inputHandler}
                 notChangeable={true}
             />
