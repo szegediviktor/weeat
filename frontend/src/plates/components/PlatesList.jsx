@@ -1,3 +1,4 @@
+import Button from "../../shared/components/form-elements/Button";
 import Card from "../../shared/components/UI-elements/Card";
 import PlatesItem from "./PlatesItem";
 
@@ -6,10 +7,12 @@ import "./platesList.css";
 const PlatesList = (props) => {
     if (props.items.length < 1) {
         return (
-            <div className="plates-list">
+            <div className="plate-list centered-div">
                 <Card>
-                    <h2>No shared plates yet. Share one!</h2>
-                    <button>Share plate</button>
+                    <h2>You don't have any plates yet.</h2>
+                    <h2>Would you like to have one?</h2>
+                    <br />
+                    <Button to="/plates/add">Share plate</Button>
                 </Card>
             </div>
         );
