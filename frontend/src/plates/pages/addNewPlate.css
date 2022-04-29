@@ -17,3 +17,9 @@
 .form-add-new-plates:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
+.centered-div {
+    text-align: center;
+}
+.auth-title {
+    margin-bottom: 1rem;
+}
