@@ -24,6 +24,13 @@ const formReducer = (state, action) => {
                 isValid: formIsValid,
             };
 
+        case "SET_FORM_DATA":
+            return {
+                //no need the spread, because it will overwrite the whole state
+                input: action.input,
+                isValid: action.formIsValid,
+            };
+
         default:
             return state;
     }
@@ -43,5 +50,13 @@ export const useForm = (initInput, initFormValidity) => {
         });
     }, []);
 
-    return [formState, inputHandler];
+    const setFormData = useCallback((inputData, formValidity) => {
+        dispatch({
+            type: "SET_FORM_DATA",
+            input: inputData,
+            formIsValid: formValidity,
+        });
+    }, []);
+
+    return [formState, inputHandler, setFormData];
 };
