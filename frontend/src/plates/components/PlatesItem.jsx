@@ -9,12 +9,25 @@ import "./platesItem.css";
 
 const PlatesItem = (props) => {
     const [showMap, setShowMap] = useState(false);
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
     const openMapHandler = () => {
         setShowMap(true);
     };
     const closeMapHandler = () => {
         setShowMap(false);
+    };
+
+    const showDeleteWarningHandler = () => {
+        setShowConfirmationModal(true);
+    };
+
+    const cancelDeleteHandler = () => {
+        setShowConfirmationModal(false);
+    };
+    const confirmDeleteHandler = () => {
+        setShowConfirmationModal(false);
+        console.log("delete has done");
     };
 
     return (
@@ -38,6 +51,25 @@ const PlatesItem = (props) => {
                 </div>
             </Modal>
 
+            <Modal
+                show={showConfirmationModal}
+                onCancel={cancelDeleteHandler}
+                header="Are you really want to DELETE this plate?"
+                footerClass="plate-item_modal-actions"
+                footer={
+                    <>
+                        <Button inverse onClick={cancelDeleteHandler}>
+                            CANCEL
+                        </Button>
+                        <Button danger onClick={confirmDeleteHandler}>
+                            DELETE
+                        </Button>
+                    </>
+                }
+            >
+                <p>Be careful! You can NOT change it later!</p>
+            </Modal>
+
             <li className="plate-item">
                 <Card className="plate-item_details">
                     <div className="plate-item_img">
@@ -58,7 +90,9 @@ const PlatesItem = (props) => {
                             Map
                         </Button>
                         <Button to={`/plates/${props.id}`}>EDIT</Button>
-                        <Button danger>DELETE</Button>
+                        <Button danger onClick={showDeleteWarningHandler}>
+                            DELETE
+                        </Button>
                     </div>
                 </Card>
             </li>
