@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/projekt_neve/static/css/main.6c9963e8.css",
-    "main.js": "/projekt_neve/static/js/main.6be32eba.js",
-    "static/js/787.cda612ba.chunk.js": "/projekt_neve/static/js/787.cda612ba.chunk.js",
-    "index.html": "/projekt_neve/index.html",
-    "main.6c9963e8.css.map": "/projekt_neve/static/css/main.6c9963e8.css.map",
-    "main.6be32eba.js.map": "/projekt_neve/static/js/main.6be32eba.js.map",
-    "787.cda612ba.chunk.js.map": "/projekt_neve/static/js/787.cda612ba.chunk.js.map"
+    "main.css": "/weeat/static/css/main.6c9963e8.css",
+    "main.js": "/weeat/static/js/main.821013f9.js",
+    "static/js/787.cda612ba.chunk.js": "/weeat/static/js/787.cda612ba.chunk.js",
+    "index.html": "/weeat/index.html",
+    "main.6c9963e8.css.map": "/weeat/static/css/main.6c9963e8.css.map",
+    "main.821013f9.js.map": "/weeat/static/js/main.821013f9.js.map",
+    "787.cda612ba.chunk.js.map": "/weeat/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6c9963e8.css",
-    "static/js/main.6be32eba.js"
+    "static/js/main.821013f9.js"
   ]
 }
