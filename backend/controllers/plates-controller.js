@@ -4,7 +4,7 @@ const uuid = require("uuid");
 
 // console.log(uuid.v4());
 
-const DUMMY_PLATES = [
+let DUMMY_PLATES = [
     {
         id: "p1",
         title: "Tomato Pasta",
@@ -66,6 +66,33 @@ const getPlateByUserId = (req, res, next) => {
     res.json({ plate });
 };
 
+const updatePlateById = (req, res, next) => {
+    const { title, description } = req.body;
+    const plateId = req.params.pid;
+
+    const updatedPlate = {
+        ...DUMMY_PLATES.find((p) => {
+            return p.id === plateId;
+        }),
+    };
+    const plateIndex = DUMMY_PLATES.findIndex((p) => {
+        return p.id === plateId;
+    });
+    updatedPlate.title = title;
+    updatedPlate.description = description;
+
+    DUMMY_PLATES[plateIndex] = updatedPlate;
+    res.status(200).json({ plate: updatedPlate });
+};
+
+const deletePlateById = (req, res, next) => {
+    const plateId = req.params.pid;
+    DUMMY_PLATES = DUMMY_PLATES.filter((p) => {
+        return p.id !== plateId;
+    });
+    res.status(200).json({ message: "Deleted place" });
+};
+
 const createPlate = (req, res, next) => {
     const {
         title,
@@ -98,3 +125,5 @@ const createPlate = (req, res, next) => {
 exports.getPlateById = getPlateById;
 exports.getPlateByUserId = getPlateByUserId;
 exports.createPlate = createPlate;
+exports.updatePlateById = updatePlateById;
+exports.deletePlateById = deletePlateById;
