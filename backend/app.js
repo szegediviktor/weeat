@@ -2,12 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const platesRoutes = require("./routes/plates-routes");
+const HttpError = require("./models/http-error");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use("/api/plates", platesRoutes);
+
+app.use((req, res, next) => {
+    const error = new HttpError("Could not find this URL", 404);
+    throw error;
+});
 
 app.use((error, req, res, next) => {
     if (res.headerSent) {
