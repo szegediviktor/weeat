@@ -1,5 +1,9 @@
 const HttpError = require("../models/http-error");
 
+const uuid = require("uuid");
+
+// console.log(uuid.v4());
+
 const DUMMY_PLATES = [
     {
         id: "p1",
@@ -62,5 +66,35 @@ const getPlateByUserId = (req, res, next) => {
     res.json({ plate });
 };
 
+const createPlate = (req, res, next) => {
+    const {
+        title,
+        description,
+        restaurantName,
+        chefName,
+        rate,
+        address,
+        coordinates,
+        creator,
+    } = req.body;
+
+    const createdPlate = {
+        id: uuid.v4(),
+        title,
+        description,
+        restaurantName,
+        chefName,
+        rate,
+        address,
+        creator,
+        location: coordinates,
+    };
+
+    DUMMY_PLATES.push(createdPlate);
+
+    res.status(201).json({ plate: createdPlate });
+};
+
 exports.getPlateById = getPlateById;
 exports.getPlateByUserId = getPlateByUserId;
+exports.createPlate = createPlate;
