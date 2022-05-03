@@ -5,6 +5,8 @@ const platesRoutes = require("./routes/plates-routes");
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use("/api/plates", platesRoutes);
 
 app.use((error, req, res, next) => {
