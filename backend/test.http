@@ -1,0 +1,19 @@
+POST http://localhost:5000/api/plates
+Content-Type: application/json
+
+{ 
+   "title": "Goulash Soup",
+    "description": "Traditional hungarian goulash soup, with homemade sourdough bread",
+    "restaurantName": "HunFood Factory",
+    "chefName": "Jakab Gipsz",
+    "rate": 5,
+    "address": "Nemlétezem street 30., Budapest",
+    "creator": "user2",
+    "coordinates": {
+        "lat":47.6273625,
+        "lng":-30.6372837
+    }
+    
+}
+###
+GET http://localhost:5000/api/plates/user/user2
