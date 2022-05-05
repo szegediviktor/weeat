@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Users from "./user/pages/Users";
 import UserPlates from "./plates/pages/UserPlates";
 import AddNewPlate from "./plates/pages/AddNewPlate";
+import Home from "./home/Home";
 
 import MainNav from "./shared/components/navigation/MainNav";
 import UpdatePlate from "./plates/pages/UpdatePlate";
@@ -26,20 +27,22 @@ function App() {
     if (isLoggedIn) {
         routes = (
             <>
-                <Route path="/" element={<Users />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/users" element={<Users />} />
                 <Route path="/:userId/plates" element={<UserPlates />} exact />
                 <Route path="/plates/add" element={<AddNewPlate />} />
                 <Route path="/plates/:plateId" element={<UpdatePlate />} />
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/home" />} />
             </>
         );
     } else {
         routes = (
             <>
-                <Route path="/" element={<Users />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/users" element={<Users />} />
                 <Route path="/:userId/plates" element={<UserPlates />} exact />
                 <Route path="/auth" element={<Auth />} />
-                <Route path="*" element={<Navigate to="/auth" />} />
+                <Route path="*" element={<Navigate to="/home" />} />
             </>
         );
     }
