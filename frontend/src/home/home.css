@@ -1,0 +1,22 @@
+.home {
+    width: 90%;
+    max-width: 50rem;
+    text-align: center;
+
+    margin: 1.2rem auto;
+    padding: 1.5rem;
+
+    background: white;
+
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    transition: all ease 300ms;
+}
+.home:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+.home div,
+.home button {
+    margin: 1.3rem 0;
+}
