@@ -53,17 +53,17 @@ const getPlateById = (req, res, next) => {
     res.json({ plate });
 };
 
-const getPlateByUserId = (req, res, next) => {
+const getPlatesByUserId = (req, res, next) => {
     const userId = req.params.uid;
-    const plate = DUMMY_PLATES.find((p) => {
+    const platesFromSpecifiedUserId = DUMMY_PLATES.filter((p) => {
         return p.creator === userId;
     });
-    if (!plate) {
+    if (!platesFromSpecifiedUserId || platesFromSpecifiedUserId.length <= 0) {
         return next(
             new HttpError("Could not find a plate for the provided ID", 404)
         );
     }
-    res.json({ plate });
+    res.json({ platesFromSpecifiedUserId });
 };
 
 const updatePlateById = (req, res, next) => {
@@ -123,7 +123,7 @@ const createPlate = (req, res, next) => {
 };
 
 exports.getPlateById = getPlateById;
-exports.getPlateByUserId = getPlateByUserId;
+exports.getPlatesByUserId = getPlatesByUserId;
 exports.createPlate = createPlate;
 exports.updatePlateById = updatePlateById;
 exports.deletePlateById = deletePlateById;
