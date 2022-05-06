@@ -54,7 +54,7 @@ const AddNewPlate = () => {
                 id="chef"
                 element="input"
                 label="The Chef:"
-                validators={[VALIDATOR_REQUIRE]}
+                validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter the name of the Chef!"
                 onInput={inputHandler}
                 notChangeable={true}
@@ -63,7 +63,7 @@ const AddNewPlate = () => {
                 id="restaurant"
                 element="input"
                 label="The Restaurant:"
-                validators={[VALIDATOR_REQUIRE]}
+                validators={[VALIDATOR_REQUIRE()]}
                 errorText="Please enter a valid restaurant name!"
                 onInput={inputHandler}
                 notChangeable={true}
