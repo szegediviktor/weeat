@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const platesRoutes = require("./routes/plates-routes");
-const usersRoutes = require("./routes/user-router");
+const usersRoutes = require("./routes/user-routes");
 
 const HttpError = require("./models/http-error");
 
