@@ -6,6 +6,8 @@ const uuid = require("uuid");
 
 // console.log(uuid.v4());
 
+const getEuropeCoordinates = require("../location/location");
+
 let DUMMY_PLATES = [
     {
         id: "p1",
@@ -133,7 +135,7 @@ const createPlate = (req, res, next) => {
         rate,
         address,
         creator,
-        location: coordinates,
+        location: getEuropeCoordinates(),
     };
 
     DUMMY_PLATES.push(createdPlate);
