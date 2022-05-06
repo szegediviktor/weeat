@@ -1,5 +1,7 @@
 const HttpError = require("../models/http-error");
 
+const validator = require("express-validator");
+
 const uuid = require("uuid");
 
 // console.log(uuid.v4());
@@ -67,6 +69,12 @@ const getPlatesByUserId = (req, res, next) => {
 };
 
 const updatePlateById = (req, res, next) => {
+    const err = validator.validationResult(req);
+    if (!err.isEmpty()) {
+        throw new HttpError("Invalid inputs", 422);
+    }
+    console.log(err);
+
     const { title, description } = req.body;
     const plateId = req.params.pid;
 
@@ -87,6 +95,11 @@ const updatePlateById = (req, res, next) => {
 
 const deletePlateById = (req, res, next) => {
     const plateId = req.params.pid;
+    const deletingPlate = DUMMY_PLATES.find((p) => p.id === plateId);
+    if (!deletingPlate) {
+        throw new HttpError("Plate do not exist", 404);
+    }
+
     DUMMY_PLATES = DUMMY_PLATES.filter((p) => {
         return p.id !== plateId;
     });
@@ -94,6 +107,12 @@ const deletePlateById = (req, res, next) => {
 };
 
 const createPlate = (req, res, next) => {
+    const err = validator.validationResult(req);
+    console.log(err);
+    if (!err.isEmpty()) {
+        throw new HttpError("Invalid inputs", 422);
+    }
+
     const {
         title,
         description,
