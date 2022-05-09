@@ -35,7 +35,7 @@ const MainNav = (props) => {
                     <span></span>
                 </button>
                 <h1 className="main-nav_title">
-                    <Link to="/">WeEat</Link>
+                    <Link to="/weeat">WeEat</Link>
                 </h1>
                 <nav className="main-nav_header-nav">
                     <NavLinks />

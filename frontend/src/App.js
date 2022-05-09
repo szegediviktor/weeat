@@ -27,7 +27,7 @@ function App() {
     if (isLoggedIn) {
         routes = (
             <>
-                <Route path="/home" element={<Home />} />
+                <Route path="/weeat" element={<Home />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/:userId/plates" element={<UserPlates />} exact />
                 <Route path="/plates/add" element={<AddNewPlate />} />
@@ -38,7 +38,7 @@ function App() {
     } else {
         routes = (
             <>
-                <Route path="/home" element={<Home />} />
+                <Route path="/weeat" element={<Home />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/:userId/plates" element={<UserPlates />} exact />
                 <Route path="/auth" element={<Auth />} />
