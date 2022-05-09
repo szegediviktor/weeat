@@ -1,6 +1,7 @@
 const HttpError = require("../models/http-error");
 
 const validator = require("express-validator");
+const mongoose = require("mongoose");
 
 const uuid = require("uuid");
 
@@ -8,111 +9,128 @@ const uuid = require("uuid");
 
 const getEuropeCoordinates = require("../location/location");
 
-let DUMMY_PLATES = [
-    {
-        id: "p1",
-        title: "Tomato Pasta",
-        restaurantName: "NotReal Italian Bistro ",
-        chefName: "John Doe",
-        description:
-            "Delicious pasta from the heart of Milano. Parmeggiano Reggiano on the top makes it perfect.",
-        rate: 8,
-        imageURL:
-            "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGFzdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
-        address: "Castello Sforzesco, Milano, Italy",
-        location: {
-            lat: 45.4717713,
-            lng: 9.1824161,
-        },
-        creator: "user1",
-    },
-    {
-        id: "p2",
-        title: "Classic Cheeseburger",
-        restaurantName: "BurgerManiac Restaurant",
-        chefName: "Bobby Burgermaker",
-        description: "Angus, homemade bun, classic taste. I will be back!",
-        rate: 9,
-        imageURL:
-            "https://images.unsplash.com/photo-1550317138-10000687a72b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aGFtYnVyZ2VyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400&q=60",
-        address: "NotExist street, Oslo, Norway",
-        location: {
-            lat: 59.9129437,
-            lng: 10.7400021,
-        },
-        creator: "user1",
-    },
-];
+const Plate = require("../models/plate");
+const User = require("../models/user");
 
-const getPlateById = (req, res, next) => {
+const getPlateById = async (req, res, next) => {
     const plateId = req.params.pid;
-    const plate = DUMMY_PLATES.find((p) => {
-        return p.id === plateId;
-    });
+
+    let plate;
+    try {
+        plate = await Plate.findById(plateId);
+    } catch (err) {
+        const error = new HttpError("Something went wrong.", 500);
+        return next(error);
+    }
 
     if (!plate) {
-        throw new HttpError("Could not find a plate for the provided ID", 404);
-    }
-
-    res.json({ plate });
-};
-
-const getPlatesByUserId = (req, res, next) => {
-    const userId = req.params.uid;
-    const platesFromSpecifiedUserId = DUMMY_PLATES.filter((p) => {
-        return p.creator === userId;
-    });
-    if (!platesFromSpecifiedUserId || platesFromSpecifiedUserId.length <= 0) {
-        return next(
-            new HttpError("Could not find a plate for the provided ID", 404)
+        const error = new HttpError(
+            "Could not find a plate for the provided ID",
+            404
         );
+        return next(error);
     }
-    res.json({ platesFromSpecifiedUserId });
+
+    res.json({ plate: plate.toObject({ getters: true }) });
 };
 
-const updatePlateById = (req, res, next) => {
+const getPlatesByUserId = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    let platesFromSpecifiedUserId;
+    try {
+        platesFromSpecifiedUserId = await Plate.find({ creator: userId });
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
+    }
+
+    if (!platesFromSpecifiedUserId || platesFromSpecifiedUserId.length <= 0) {
+        const error = new HttpError("Could not find.", 404);
+
+        return next(error);
+    }
+
+    // console.log(userId);
+    // console.log(platesFromSpecifiedUserId);
+
+    res.json({
+        platesFromSpecifiedUserId: platesFromSpecifiedUserId.map((p) =>
+            p.toObject({ getters: true })
+        ),
+    });
+};
+
+const updatePlateById = async (req, res, next) => {
     const err = validator.validationResult(req);
     if (!err.isEmpty()) {
-        throw new HttpError("Invalid inputs", 422);
+        const error = new HttpError("Invalid inputs", 422);
+        return next(error);
     }
-    console.log(err);
 
     const { title, description } = req.body;
     const plateId = req.params.pid;
+    let updatedPlate;
 
-    const updatedPlate = {
-        ...DUMMY_PLATES.find((p) => {
-            return p.id === plateId;
-        }),
-    };
-    const plateIndex = DUMMY_PLATES.findIndex((p) => {
-        return p.id === plateId;
-    });
+    try {
+        updatedPlate = await Plate.findById(plateId);
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
+    }
+
     updatedPlate.title = title;
     updatedPlate.description = description;
 
-    DUMMY_PLATES[plateIndex] = updatedPlate;
-    res.status(200).json({ plate: updatedPlate });
-};
-
-const deletePlateById = (req, res, next) => {
-    const plateId = req.params.pid;
-    const deletingPlate = DUMMY_PLATES.find((p) => p.id === plateId);
-    if (!deletingPlate) {
-        throw new HttpError("Plate do not exist", 404);
+    try {
+        await updatedPlate.save();
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
     }
 
-    DUMMY_PLATES = DUMMY_PLATES.filter((p) => {
-        return p.id !== plateId;
-    });
+    res.status(200).json({ plate: updatedPlate.toObject({ getters: true }) });
+};
+
+const deletePlateById = async (req, res, next) => {
+    const plateId = req.params.pid;
+
+    let deletingPlate;
+
+    try {
+        deletingPlate = await Plate.findById(plateId).populate("creator");
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
+    }
+
+    if (!deletingPlate) {
+        const error = new HttpError("Could not find plate for this id ", 404);
+        return next(error);
+    }
+
+    try {
+        const sessn = await mongoose.startSession();
+        sessn.startTransaction();
+        await deletingPlate.remove({ session: sessn });
+        deletingPlate.creator.plates.pull(deletingPlate);
+        await deletingPlate.creator.save({ session: sessn });
+        await sessn.commitTransaction();
+        console.log(deletingPlate);
+    } catch (err) {
+        const error = new HttpError("Something went wrong", 500);
+        return next(error);
+    }
+
     res.status(200).json({ message: "Deleted place" });
 };
 
-const createPlate = (req, res, next) => {
+const createPlate = async (req, res, next) => {
     const err = validator.validationResult(req);
     console.log(err);
     if (!err.isEmpty()) {
-        throw new HttpError("Invalid inputs", 422);
+        const error = new HttpError("Invalid inputs", 422);
+        return next(error);
     }
 
     const {
@@ -122,23 +140,60 @@ const createPlate = (req, res, next) => {
         chefName,
         rate,
         address,
-        coordinates,
         creator,
     } = req.body;
 
-    const createdPlate = {
-        id: uuid.v4(),
+    let coordinates;
+    try {
+        coordinates = await getEuropeCoordinates(address);
+    } catch (err) {
+        return next(err);
+    }
+
+    const createdPlate = new Plate({
         title,
         description,
+        imageURL:
+            "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGFzdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
         restaurantName,
         chefName,
         rate,
         address,
+        location: coordinates,
         creator,
-        location: getEuropeCoordinates(),
-    };
+    });
 
-    DUMMY_PLATES.push(createdPlate);
+    console.log(creator);
+    let user;
+    try {
+        user = await User.findById(creator);
+    } catch (err) {
+        const error = new HttpError("Creating process failed", 500);
+        return next(error);
+    }
+
+    if (!user) {
+        const error = new HttpError("Could not find the user", 404);
+        return next(error);
+    }
+
+    try {
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await createdPlate.save({ session: sess });
+        user.plates.push(createdPlate);
+        await user.save({ session: sess });
+        await sess.commitTransaction();
+    } catch (err) {
+        const error = new HttpError(
+            "Creating plate failed, please try again.",
+            500
+        );
+        console.log(err);
+        return next(error);
+    }
+
+    // console.log(user);
 
     res.status(201).json({ plate: createdPlate });
 };

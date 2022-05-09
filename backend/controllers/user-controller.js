@@ -1,53 +1,79 @@
 const validator = require("express-validator");
-
-const HttpError = require("../models/http-error");
-
 const uuid = require("uuid");
 
-const DUMMY_USERS = [
-    {
-        id: 111,
-        name: "Viktor",
-        email: "test@testing.com",
-        password: "testing",
-    },
-];
+const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
-const getAllUsers = (req, res, next) => {
-    res.status(200).json({ users: DUMMY_USERS });
+const getAllUsers = async (req, res, next) => {
+    let users;
+
+    try {
+        users = await User.find({}, "-password");
+        // console.log(users);
+    } catch (err) {
+        const error = new HttpError("Fetching users failed", 500);
+        return next(error);
+    }
+    res.json({
+        users: users.map((u) => {
+            return u.toObject({ getters: true });
+        }),
+    });
 };
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
     const err = validator.validationResult(req);
     if (!err.isEmpty()) {
-        throw new HttpError("Invalid inputs", 422);
+        const error = new HttpError("Invalid inputs", 422);
+        return next(error);
     }
     console.log(err);
 
     const { name, email, password } = req.body;
 
-    const alreadyHasUser = DUMMY_USERS.find((user) => user.email === email);
-    if (alreadyHasUser) {
-        throw new HttpError("This user has already exist", 422);
+    let existingUser;
+    try {
+        existingUser = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError("Signing up failed", 500);
+        return next(error);
     }
 
-    const newUser = {
-        id: uuid.v4(),
-        name: name,
-        email: email,
-        password: password,
-    };
+    if (existingUser) {
+        const error = new HttpError("User exists already", 422);
+        return next(error);
+    }
 
-    DUMMY_USERS.push(newUser);
+    const newUser = new User({
+        name,
+        email,
+        image: "https://images.unsplash.com/photo-1579935110464-fcd041be62d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTZ8fHlvZGF8ZW58MHx8MHx8&auto=format&fit=crop&w=600&q=60",
+        password,
+        plates: [],
+    });
 
-    res.status(201).json({ user: newUser });
+    try {
+        await newUser.save();
+    } catch (err) {
+        const error = new HttpError("Signing up failed", 500);
+        return next(error);
+    }
+
+    res.status(201).json({ user: newUser.toObject({ getters: true }) });
 };
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
     const { email, password } = req.body;
 
-    const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
+    let identifiedUser;
+    try {
+        identifiedUser = await User.findOne({ email: email });
+    } catch (err) {
+        const error = new HttpError("Login failed", 500);
+        return next(error);
+    }
 
     if (!identifiedUser || identifiedUser.password !== password) {
-        throw new HttpError("Wrong credentials", 401);
+        const error = new HttpError("Wrong credentials", 401);
+        return next(error);
     }
 
     res.json({ message: "Login has done" });
