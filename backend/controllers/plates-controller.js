@@ -3,10 +3,6 @@ const HttpError = require("../models/http-error");
 const validator = require("express-validator");
 const mongoose = require("mongoose");
 
-const uuid = require("uuid");
-
-// console.log(uuid.v4());
-
 const getEuropeCoordinates = require("../location/location");
 
 const Plate = require("../models/plate");
